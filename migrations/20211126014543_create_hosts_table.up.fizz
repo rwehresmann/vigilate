@@ -1,0 +1,17 @@
+create_table("hosts") {
+    t.Column("id", "integer", {primary: true})
+    t.Column("host_name", "string", {"size":225})
+    t.Column("canonical_name", "string", {"size":225})
+    t.Column("url", "string", {"size":225})
+    t.Column("ipv6", "string", {"size":225})
+    t.Column("location", "string", {"size":225})
+    t.Column("os", "string", {"size":225})
+    t.Column("active", "integer", {"default":1})
+}
+
+sql(`
+    CREATE TRIGGER set_timestamp
+        BEFORE UPDATE on hosts
+        FOR EACH ROW
+    EXECUTE PROCEDURE trigger_set_timestamp();
+`)
